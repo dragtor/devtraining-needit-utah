@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update sys_domain="global" table="sys_cb_design_topic">
+    <sys_cb_design_topic action="INSERT_OR_UPDATE">
+        <compiled_topic display_value="setup/Reset verification profile-dragtor">156e462183dd1210545db1d6feaad34f</compiled_topic>
+        <design_definition>{"type":"FlowTopic","triggers":[{"type":"Trigger","name":"1239425cc1174fdfa2345998f5feec51","triggerType":"request","applicability":{"type":"Applicability","mode":"script","value":"true"},"id":"1239425cc1174fdfa2345998f5feec51"}],"goals":[{"name":"primary","trigger_id":"1239425cc1174fdfa2345998f5feec51","nodes":[{"type":"StartGoal","goal_id":"primary","greeting_msg":{"type":"String","mode":"script","value":"(function execute() {\n    /* Return a quoted string.  For example:\n\n       if (vaInputs.first_name == 'Bill') {\n           return gs.getMessageLang(\"hi there {0}\", vaContext.getRequesterLang(), [vaInputs.first_name]);\n       } else {\n           return gs.getMessageLang(\"how are you {0}\", vaContext.getRequesterLang(), [vaInputs.last_name]);\n       }\n    */\n    vaVars.global_keyword_topic_finished = false;\n    return '';\n})()\n"},"id":"03ecd87eb1b94cf9aae15d3d1e7c918e","name":"Start","expert_mode":false},{"type":"TerminateGoal","goal_id":"primary","confirmation_msg":{"type":"String","mode":"script","value":"(function execute() {\n    /* Return a quoted string.  For example:\n\n       if (vaInputs.first_name == 'Bill') {\n           return gs.getMessageLang(\"hi there {0}\", vaContext.getRequesterLang(), [vaInputs.first_name]);\n       } else {\n           return gs.getMessageLang(\"how are you {0}\", vaContext.getRequesterLang(), [vaInputs.last_name]);\n       }\n    */\n    vaVars.global_keyword_topic_finished = true;\n    return '';\n\n})()\n"},"id":"7754eafc40d9439e92299c61ebb31def","name":"End","expert_mode":false},{"type":"TextOutputPrompt","value":[{"type":"String","mode":"script","value":"(function execute() {\n    \n    return gs.getMessageLang(\"You can setup or reset your account verification setting using the below link.\", vaContext.getRequesterLang());\n})()\n"}],"request_feedback":true,"id":"9c16cc21a1f44fb996a98209d0cf6df1","name":"setup message","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"secure":false},{"type":"TextOutputPrompt","value":[{"type":"String","mode":"script","value":"(function execute() {\n  \n    var hostURL = gs.getProperty('glide.servlet.uri');\n    var link = hostURL+\"now/nav/ui/classic/params/target/%24pwd_enrollment_form_container.do\"\n    return link;\n  \n})()\n"}],"request_feedback":true,"id":"3169a0028a4b47e6ae198998cc86f1fa","name":"setup_link","goal_id":"primary","applicability":{"type":"Applicability","mode":"script","value":"true"},"expert_mode":false,"secure":false}],"edges":[{"type":"Edge","source_node_id":"03ecd87eb1b94cf9aae15d3d1e7c918e","target_node_id":"9c16cc21a1f44fb996a98209d0cf6df1","id":"d939d26f78ab4de2aa3dd2ecabf494ec"},{"type":"Edge","source_node_id":"9c16cc21a1f44fb996a98209d0cf6df1","target_node_id":"3169a0028a4b47e6ae198998cc86f1fa","id":"70bf025f34064d4bb8b03a9fe2bcbe5e"},{"type":"Edge","source_node_id":"3169a0028a4b47e6ae198998cc86f1fa","target_node_id":"7754eafc40d9439e92299c61ebb31def","id":"fe788d24ec18443a91ae84fd87c0ca8d"}],"id":"primary"}],"script_variables":[],"glide_variables":[{"type":"Reference","table":"sys_user","id":"aa7b096150044660af51eda4c7b488e2","name":"user","formatType":"text","secure":false,"sensitive":false,"aiInput":false,"list":false}],"applicability":{"type":"Applicability","mode":"script","value":"(function execute() {\n  \n    if(gs.nil(vaContext.providerAppId)){\n        return false;\n    }\n     var providerApp = JSON.parse(sn_cs.VASystemObject.getProviderAppById(vaContext.providerAppId));\n     if(gs.nil(providerApp)){\n         return false;\n     }\n \n     var SMS_CHANNEL = '5ae1b3e3771700105d7b3882a91061bd';\n     var providerSysId = providerApp.providerId;\n     var csProviderGR = new GlideRecord(\"sys_cs_provider\");\n     csProviderGR.addQuery(\"sys_id\", providerSysId);\n     csProviderGR.addEncodedQuery(\"link_account_enabled=true^account_link_type!=basic\");\n     csProviderGR.query();\n\n     var result = false;\n     if(csProviderGR.next()){\n         if(!csProviderGR.getValue(\"channel\").equals(SMS_CHANNEL)){\n            return false;\n         }\n\n         result = true;     \n     }\n  \n     var session = gs.getSession();\n     var loggedIn = session.isLoggedIn();\n     result = result &amp;&amp; (!loggedIn);\n     return result;\n   \n})()\n"},"roles":["public"],"scope":"6ead8e780f603200cd674f8ce1050ed1","domain":"global","topic_type":"STANDARD","channels":["SMS"],"dialog_acts_enabled":false,"id":"b33e82e9839d1210545db1d6feaad360","name":"setup/Reset verification profile-dragtor","key_phrases":["setup/Reset verification profile-dragtor","Setup/Reset Verification Profile","reset"],"nlu_provider":"","nlu_model":"","nlu_model_label":"","nlu_intent":"","nlu_intent_label":"","flexible_conversation_switching":true,"autopilot_topic":false,"design_categories":[],"triggerable_by_notification":false,"description":"Provide information and link for user to setup or reset verification profile","model_type":"nlu_keyword","foundational":false,"modify_confirmation_enabled":false,"context_profiles":[],"title":"setup/Reset verification profile-dragtor","library":false,"readOnly":false,"nluMapping":"[]"}</design_definition>
+        <design_topic_id>b33e82e9839d1210545db1d6feaad360</design_topic_id>
+        <graph>{
+  "graph_api_version": "1.0.68",
+  "goals": {
+    "primary": {
+      "id": "primary",
+      "trigger": {
+        "type": "primary"
+      },
+      "name": "primary",
+      "applicability": "",
+      "description": "",
+      "nodes": {
+        "03ecd87eb1b94cf9aae15d3d1e7c918e": {
+          "id": "03ecd87eb1b94cf9aae15d3d1e7c918e",
+          "stepType": "Start",
+          "name": "Start",
+          "greetingResponse": {
+            "value": "(function execute() {\n    /* Return a quoted string.  For example:\n\n       if (vaInputs.first_name == 'Bill') {\n           return gs.getMessageLang(\"hi there {0}\", vaContext.getRequesterLang(), [vaInputs.first_name]);\n       } else {\n           return gs.getMessageLang(\"how are you {0}\", vaContext.getRequesterLang(), [vaInputs.last_name]);\n       }\n    */\n    vaVars.global_keyword_topic_finished = false;\n    return '';\n})()\n",
+            "mode": "script"
+          }
+        },
+        "7754eafc40d9439e92299c61ebb31def": {
+          "id": "7754eafc40d9439e92299c61ebb31def",
+          "stepType": "TerminateGoal",
+          "name": "End",
+          "confirmationMessage": {
+            "value": "(function execute() {\n    /* Return a quoted string.  For example:\n\n       if (vaInputs.first_name == 'Bill') {\n           return gs.getMessageLang(\"hi there {0}\", vaContext.getRequesterLang(), [vaInputs.first_name]);\n       } else {\n           return gs.getMessageLang(\"how are you {0}\", vaContext.getRequesterLang(), [vaInputs.last_name]);\n       }\n    */\n    vaVars.global_keyword_topic_finished = true;\n    return '';\n\n})()\n",
+            "mode": "script"
+          }
+        },
+        "9c16cc21a1f44fb996a98209d0cf6df1": {
+          "id": "9c16cc21a1f44fb996a98209d0cf6df1",
+          "stepType": "TextOutput",
+          "name": "setup message",
+          "secure": false,
+          "value": [
+            {
+              "value": "(function execute() {\n    \n    return gs.getMessageLang(\"You can setup or reset your account verification setting using the below link.\", vaContext.getRequesterLang());\n})()\n",
+              "mode": "script"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "requestFeedback": true
+        },
+        "3169a0028a4b47e6ae198998cc86f1fa": {
+          "id": "3169a0028a4b47e6ae198998cc86f1fa",
+          "stepType": "TextOutput",
+          "name": "setup_link",
+          "secure": false,
+          "value": [
+            {
+              "value": "(function execute() {\n  \n    var hostURL = gs.getProperty('glide.servlet.uri');\n    var link = hostURL+\"now/nav/ui/classic/params/target/%24pwd_enrollment_form_container.do\"\n    return link;\n  \n})()\n",
+              "mode": "script"
+            }
+          ],
+          "applicability": {
+            "value": "",
+            "mode": "query"
+          },
+          "requestFeedback": true
+        }
+      },
+      "edges": [
+        {
+          "id": "d939d26f78ab4de2aa3dd2ecabf494ec",
+          "edgeType": "Edge",
+          "source": "03ecd87eb1b94cf9aae15d3d1e7c918e",
+          "target": "9c16cc21a1f44fb996a98209d0cf6df1",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "70bf025f34064d4bb8b03a9fe2bcbe5e",
+          "edgeType": "Edge",
+          "source": "9c16cc21a1f44fb996a98209d0cf6df1",
+          "target": "3169a0028a4b47e6ae198998cc86f1fa",
+          "sourcePort": "",
+          "targetPort": ""
+        },
+        {
+          "id": "fe788d24ec18443a91ae84fd87c0ca8d",
+          "edgeType": "Edge",
+          "source": "3169a0028a4b47e6ae198998cc86f1fa",
+          "target": "7754eafc40d9439e92299c61ebb31def",
+          "sourcePort": "",
+          "targetPort": ""
+        }
+      ]
+    }
+  },
+  "variables": {
+    "aa7b096150044660af51eda4c7b488e2": {
+      "category": "vaInputs",
+      "id": "aa7b096150044660af51eda4c7b488e2",
+      "label": "User",
+      "name": "user",
+      "table": "sys_user",
+      "varType": "reference"
+    }
+  }
+}</graph>
+        <name>setup/Reset verification profile-dragtor</name>
+        <sys_class_name>sys_cb_design_topic</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2024-10-17 06:10:21</sys_created_on>
+        <sys_domain>global</sys_domain>
+        <sys_id>956e462183dd1210545db1d6feaad3b7</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_name>FlowTopic</sys_name>
+        <sys_package display_value="NeedIt" source="x_58872_needit">6ead8e780f603200cd674f8ce1050ed1</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="NeedIt">6ead8e780f603200cd674f8ce1050ed1</sys_scope>
+        <sys_update_name>sys_cb_design_topic_956e462183dd1210545db1d6feaad3b7</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2024-10-17 06:10:21</sys_updated_on>
+        <type>FlowTopic</type>
+    </sys_cb_design_topic>
+</record_update>
